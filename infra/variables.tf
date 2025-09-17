@@ -14,3 +14,8 @@ variable "region" {
   type        = string
   default     = "asia-northeast1"
 }
+
+variable "ga_raw_dataset_id" {
+  description = "GA4のエキスポートしているdatasetのID"
+  type        = string
+}
