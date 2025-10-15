@@ -30,5 +30,4 @@ resource "google_bigquery_dataset_iam_member" "raw_viewer" {
   project    = var.project_id
   role       = "roles/bigquery.dataViewer"
   member     = "serviceAccount:${google_service_account.dbt_runner.email}"
-
 }
