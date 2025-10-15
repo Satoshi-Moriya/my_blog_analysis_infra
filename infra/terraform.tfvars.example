@@ -4,3 +4,4 @@
 project_id  = "your-gcp-project-id"
 region      = "asia-northeast1"
 bq_location = "asia-northeast1"
+ga_raw_dataset_id = "analytics_xxxxxxxxx"
