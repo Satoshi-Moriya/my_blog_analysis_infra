@@ -3,7 +3,7 @@ variable "project_id" {
   type        = string
 }
 
-variable "bq_location" {
+variable "location" {
   description = "BigQueryのlocation"
   type        = string
   default     = "asia-northeast1"
