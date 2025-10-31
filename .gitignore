@@ -5,6 +5,9 @@
 *.tfstate
 *.tfstate.*
 
+# .tfstate backup storage info
+*/backend.tf
+
 # .tfvars files
 *.tfvars
 
