@@ -4,6 +4,12 @@ resource "google_project_iam_member" "dbt_job_user" {
   member  = "serviceAccount:${google_service_account.dbt_runner.email}"
 }
 
+resource "google_project_iam_member" "scheduler_invoker" {
+  project = var.project_id
+  role    = "roles/run.invoker"
+  member  = "serviceAccount:${google_service_account.dbt_runner.email}"
+}
+
 resource "google_bigquery_dataset_iam_member" "staging_editor" {
   dataset_id = google_bigquery_dataset.prod_staging.dataset_id
   project    = var.project_id
