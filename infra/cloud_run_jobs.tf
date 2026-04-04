@@ -6,7 +6,7 @@ resource "google_cloud_run_v2_job" "dbt_job" {
   template {
     template {
       containers {
-        image   = "asia-northeast1-docker.pkg.dev/my-blog-ga4-469009/my-repository/my-blog-analysis-etl:latest"
+        image   = "asia-northeast1-docker.pkg.dev/${var.project_id}/my-repository/my-blog-analysis-etl:latest"
         command = ["bash"]
         args    = ["/app/scripts/batch.sh"]
 
