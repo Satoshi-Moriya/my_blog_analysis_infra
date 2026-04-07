@@ -15,7 +15,7 @@ resource "google_storage_bucket" "backend_bucket" {
       type = "Delete"
     }
     condition {
-      age = 30
+      num_newer_versions = 5
     }
   }
 }
