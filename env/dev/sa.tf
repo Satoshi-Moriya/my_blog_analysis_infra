@@ -1,8 +1,5 @@
-module "sa" {
-  source = "../../modules/sa"
-
-  env        = var.env
-  project_id = var.project_id
-  region     = var.region
-  location   = var.location
+resource "google_service_account" "ci_runner" {
+  account_id   = "my-blog-analysis-ci-sa"
+  display_name = "my_blog_analysisのci用のService Account"
+  project = var.project_id
 }
