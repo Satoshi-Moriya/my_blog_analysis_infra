@@ -1,3 +1,8 @@
+variable "env" {
+  type    = string
+  default = "dev"
+}
+
 variable "project_id" {
   description = "Google CloudのProject ID"
   type        = string

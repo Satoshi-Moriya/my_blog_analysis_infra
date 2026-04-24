@@ -1,6 +1,7 @@
 # このファイルをコピーして terraform.tfvars を作成してください
 # cp terraform.tfvars.example terraform.tfvars
 
+env         = "dev"
 project_id  = "your-gcp-project-id"
 region      = "asia-northeast1"
 location    = "asia-northeast1"
