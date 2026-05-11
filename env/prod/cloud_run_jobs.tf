@@ -26,7 +26,7 @@ resource "google_cloud_run_v2_job" "dbt_job" {
         }
 
       }
-      service_account = google_service_account.dbt_runner.email
+      service_account = module.service_accounts.sa_dbt_runner_email
 
       max_retries = 1
       timeout     = "3600s"
