@@ -16,3 +16,14 @@ resource "google_logging_metric" "job_failure" {
     value_type  = "INT64"
   }
 }
+
+resource "google_monitoring_notification_channel" "slack_alert" {
+  project      = var.project_id
+  display_name = "ジョブエラー通知用メールアドレス"
+  type         = "email"
+  force_delete = false
+
+  labels = {
+    email_address = var.notification_email
+  }
+}
