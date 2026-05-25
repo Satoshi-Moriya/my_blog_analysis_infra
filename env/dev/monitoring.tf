@@ -27,3 +27,51 @@ resource "google_monitoring_notification_channel" "slack_alert" {
     email_address = var.notification_email
   }
 }
+
+resource "google_monitoring_alert_policy" "job_failure_alert" {
+  project               = var.project_id
+  display_name          = "Error Alert for ${module.dbt_job.dbt_job_name}"
+  combiner              = "OR"
+  severity              = "ERROR"
+  enabled               = true
+  notification_channels = [google_monitoring_notification_channel.slack_alert.id]
+
+  conditions {
+    display_name = "Error Condition for ${module.dbt_job.dbt_job_name}"
+
+    condition_threshold {
+      # filterのmetric.typeにログベースの指標を指定（resource.typeの指定も必須）
+      filter          = "resource.type=\"cloud_run_job\" AND metric.type=\"logging.googleapis.com/user/${google_logging_metric.job_failure.name}\""
+      comparison      = "COMPARISON_GT"
+      threshold_value = 0
+
+      aggregations {
+        alignment_period   = "60s"
+        per_series_aligner = "ALIGN_COUNT"
+      }
+
+      duration                = "60s"
+      evaluation_missing_data = "EVALUATION_MISSING_DATA_INACTIVE"
+    }
+  }
+
+  alert_strategy {
+    notification_prompts = ["OPENED"]
+  }
+
+  documentation {
+    subject = "ジョブ($${resource.label.job_name})の実行に失敗しました"
+
+    content = <<-EOT
+    ## Google Cloudプロジェクト
+    $${resource.label.project_id}
+    ## Cloud Runジョブ名
+    $${resource.label.job_name} 
+    ## アラートの説明
+    Cloud Runジョブ**($${resource.label.job_name})**の実行に失敗しました。
+    ジョブの実行ログおよびTerraformテンプレートの設定値を確認してください。
+    EOT
+
+    mime_type = "text/markdown"
+  }
+}
