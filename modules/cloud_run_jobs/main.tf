@@ -6,6 +6,7 @@ resource "google_cloud_run_v2_job" "dbt_job" {
   template {
     template {
       containers {
+        name    = "my-blog-analysis-etl"
         image   = "asia-northeast1-docker.pkg.dev/${var.project_id}/my-repository/my-blog-analysis-etl:latest"
         command = ["bash"]
         args    = ["/app/scripts/batch.sh"]
@@ -31,5 +32,11 @@ resource "google_cloud_run_v2_job" "dbt_job" {
       max_retries = 1
       timeout     = "3600s"
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      client,
+    ]
   }
 }
