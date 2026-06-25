@@ -11,7 +11,7 @@ resource "google_iam_workload_identity_pool_provider" "github_pool_provider" {
   workload_identity_pool_provider_id = "github-pool-provider"
 
   # 外部のリポジトリから使えないようにするため、attribute_conditionを必ず設定する
-  attribute_condition = "assertion.repository == 'Satoshi-Moriya/my_blog_analytics_etl'"
+  attribute_condition = "assertion.repository == 'Satoshi-Moriya/my_blog_analytics_etl' || assertion.repository == 'Satoshi-Moriya/my_blog_analysis_infra'"
   attribute_mapping = {
     "attribute.repository"       = "assertion.repository"
     "attribute.repository_owner" = "assertion.repository_owner"
