@@ -1,0 +1,65 @@
+name: Terraform CI（dev）
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'env/dev/**'
+      - 'modules/**'
+      - '.github/workflows/ci-dev.yml'
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
+concurrency:
+  group: plan-dev-${{ github.event.pull_request.number }}
+  cancel-in-progress: true    # 同一PRへの連続pushは古いplanをキャンセルしてよい
+
+env:
+  TF_VERSION: 1.9.0 # 使っているバージョンに合わせる
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: env/dev
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: 'google-github-actions/auth@v3'
+        with:
+          project_id: ${{ secrets.GCP_DEV_PROJECT }}
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - uses: shmokmt/actions-setup-tfcmt@v2
+
+      - name: Terraform fmt
+        run: terraform fmt -check -recursive
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform validate
+        run: terraform validate
+
+      - name: Setup tflint
+        uses: terraform-linters/setup-tflint@v4
+
+      - name: tflint
+        run: |
+          tflint --init
+          tflint --recursive
+
+      - name: Terraform plan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tfcmt -var "target:dev" plan -patch -- \
+            terraform plan -input=false -lock-timeout=60s
