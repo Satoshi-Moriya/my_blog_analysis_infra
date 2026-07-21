@@ -10,6 +10,7 @@
 
 # .tfvars files
 *.tfvars
+!*.auto.tfvars
 
 # SAキーなど機密ファイル
 *.json
