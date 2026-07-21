@@ -60,6 +60,9 @@ jobs:
       - name: Terraform plan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TF_VAR_project_id: ${{ secrets.GCP_DEV_PROJECT }}
+          TF_VAR_ga_raw_dataset_id: ${{ secrets.CI_GA_RAW_DATASET_ID }}
+          TF_VAR_notification_email: ${{ secrets.CI_NOTIFICATION_EMAIL }}
         run: |
           tfcmt -var "target:dev" plan -patch -- \
             terraform plan -input=false -lock-timeout=60s
