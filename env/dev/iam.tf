@@ -17,7 +17,7 @@ module "iam" {
 
 resource "google_storage_bucket_iam_member" "tfstate_ci" {
   bucket = "${var.project_id}-tfstate-bucket"
-  role   = "roles/storage.objectAdmin"
+  role   = "roles/storage.admin"
   member = local.ci_principal
 }
 
