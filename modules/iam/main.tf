@@ -5,7 +5,7 @@ resource "google_project_iam_member" "dbt_job_user" {
 }
 
 resource "google_project_iam_member" "scheduler_invoker" {
-  count        = var.env == "prod" ? 1 : 0
+  count = var.env == "prod" ? 1 : 0
 
   project = var.project_id
   role    = "roles/run.invoker"
