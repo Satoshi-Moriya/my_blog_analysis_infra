@@ -16,3 +16,6 @@
 *.json
 *.pem
 *.key
+
+# Claude Codeのチーム共有設定(SAキー等ではないため*.jsonの除外対象から戻す)
+!.claude/settings.json
