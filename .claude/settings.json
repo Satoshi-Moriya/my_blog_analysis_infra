@@ -1,0 +1,85 @@
+{
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "autoAllowBashIfSandboxed": false,
+    "allowUnsandboxedCommands": false,
+    "network": {
+      "allowedDomains": [
+        "*.googleapis.com",
+        "accounts.google.com",
+        "registry.terraform.io",
+        "*.hashicorp.com"
+      ]
+    }
+  },
+  "env": {
+    "CHECKPOINT_DISABLE": "1",
+    "TF_IN_AUTOMATION": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(git show*)",
+      "Bash(terraform fmt*)",
+      "Bash(terraform validate*)",
+      "Bash(terraform version*)",
+      "Bash(terraform providers*)",
+      "Bash(terraform init*)",
+      "Bash(terraform plan*)",
+      "Bash(terraform output*)",
+      "Bash(terraform show*)",
+      "Bash(terraform state list*)",
+      "Bash(terraform state show*)",
+      "Bash(terraform -chdir=env/dev fmt*)",
+      "Bash(terraform -chdir=env/dev validate*)",
+      "Bash(terraform -chdir=env/dev init*)",
+      "Bash(terraform -chdir=env/dev plan*)",
+      "Bash(terraform -chdir=env/dev output*)",
+      "Bash(terraform -chdir=env/dev show*)",
+      "Bash(terraform -chdir=env/prod fmt*)",
+      "Bash(terraform -chdir=env/prod validate*)",
+      "Bash(terraform -chdir=env/prod init*)",
+      "Bash(terraform -chdir=env/prod plan*)",
+      "Bash(terraform -chdir=env/prod output*)",
+      "Bash(terraform -chdir=env/prod show*)",
+      "Bash(gcloud config list*)",
+      "Bash(gcloud auth list*)",
+      "Bash(gcloud projects describe*)",
+      "Bash(gcloud services list*)",
+      "Bash(gsutil ls*)",
+      "Bash(bq ls*)",
+      "Bash(bq show*)"
+    ],
+    "ask": [
+      "Bash(terraform apply*)",
+      "Bash(terraform destroy*)",
+      "Bash(terraform import*)",
+      "Bash(terraform state rm*)",
+      "Bash(terraform state mv*)",
+      "Bash(terraform force-unlock*)",
+      "Bash(terraform -chdir=env/dev apply*)",
+      "Bash(terraform -chdir=env/dev destroy*)",
+      "Bash(terraform -chdir=env/prod apply*)",
+      "Bash(terraform -chdir=env/prod destroy*)",
+      "Bash(gcloud *)",
+      "Bash(gsutil rm*)",
+      "Bash(gsutil -m rm*)",
+      "Bash(bq rm*)",
+      "Bash(git push*)"
+    ],
+    "deny": [
+      "Bash(terraform apply -auto-approve*)",
+      "Bash(terraform destroy -auto-approve*)",
+      "Bash(gcloud projects delete*)",
+      "Bash(gcloud organizations*)",
+      "Bash(git push --force*)",
+      "Bash(rm -rf /*)"
+    ]
+  }
+}
